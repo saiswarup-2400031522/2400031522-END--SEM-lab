@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h3>Course Reorder (Drag and Drop)</h3>
+
+<ul id="courses">
+  <li draggable="true">Data Structures</li>
+  <li draggable="true">Algorithms</li>
+  <li draggable="true">Database Systems</li>
+  <li draggable="true">Operating Systems</li>
+  <li draggable="true">Computer Networks</li>
+</ul>
+
+<p><b>Updated Order:</b> <span id="order"></span></p>
+
+<script>
+  const list = document.getElementById("courses");
+  let draggedItem = null;
+
+  list.addEventListener("dragstart", e => {
+    draggedItem = e.target;
+  });
+
+  list.addEventListener("dragover", e => {
+    e.preventDefault();
+    let target = e.target;
+    if (target.tagName === "LI" && target !== draggedItem) {
+      list.insertBefore(draggedItem, target);
+    }
+  });
+
+  list.addEventListener("drop", () => {
+    const items = list.querySelectorAll("li");
+    document.getElementById("order").textContent =
+      Array.from(items).map(li => li.textContent).join(" | ");
+  });
+</script>
+
+</body>
+</html>
